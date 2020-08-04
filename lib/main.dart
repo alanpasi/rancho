@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rancho/providers/product_provider.dart';
 import 'package:rancho/screens/auth.dart';
+import 'package:rancho/services/firestore_service.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,8 +11,12 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ProductProvider(),
+    final firestoreService = FirestoreService();
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ProductProvider()),
+        StreamProvider(create: (context) => firestoreService.getProducts()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

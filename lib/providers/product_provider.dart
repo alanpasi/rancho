@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:rancho/services/firestore_service.dart';
+import 'package:rancho/models/product.dart';
+import 'package:uuid/uuid.dart';
 
 class ProductProvider with ChangeNotifier {
+  final firestoreService = FirestoreService();
+
   String _upc;
   String _description;
   String _unit;
   double _price;
   String _type;
   bool _isincart;
+  String _productId;
+  var uuid = Uuid();
 
   // Getters
   String get upc => _upc;
@@ -52,7 +59,43 @@ class ProductProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  loadValues(Product product) {
+    _upc = product.upc;
+    _description = product.description;
+    _unit = product.unit;
+    _type = product.type;
+    _price = product.price;
+    _productId = product.productId;
+  }
+
   saveProduct() {
-    print('$upc, $description, $unit, $price, $isincart');
+    print('$_productId, $upc, $description, $unit, $price, $type, $isincart');
+    if (_productId == null) {
+      // New product
+      var newProduct = Product(
+          upc: upc,
+          description: description,
+          unit: unit,
+          price: price,
+          type: type,
+          isincart: isincart,
+          productId: uuid.v4());
+      firestoreService.saveProduct(newProduct);
+    } else {
+      // Update product
+      var updateProduct = Product(
+          upc: upc,
+          description: description,
+          unit: unit,
+          price: price,
+          type: type,
+          isincart: isincart,
+          productId: _productId);
+      firestoreService.saveProduct(updateProduct);
+    }
+  }
+
+  removeProduct(String productId) {
+    firestoreService.removeProduct(productId);
   }
 }
