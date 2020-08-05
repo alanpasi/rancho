@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:provider/provider.dart';
 import 'package:rancho/models/product.dart';
 import 'package:rancho/providers/product_provider.dart';
@@ -130,7 +131,27 @@ class _EditProductState extends State<EditProduct> {
                 onPressed: () {
                   produtctProvider.removeProduct(widget.product.productId);
                   Navigator.of(context).pop();
-                }): Container()
+                }): MaterialButton(
+              height: 54.0,
+              padding: EdgeInsets.fromLTRB(10.0, 15.0, 10.0, 15.0),
+              child: Text(
+                'Ler Código de Barras',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              onPressed: () {
+                FlutterBarcodeScanner.scanBarcode(
+                    '#000000', 'Cancelar', true, ScanMode.BARCODE)
+                    .then((value) => setState(() {
+                  produtctProvider.changeUpc(value);
+                  upcController.text = value;
+                }));
+              },
+            ),
           ],
         ),
       ),

@@ -12,7 +12,7 @@ class FirestoreService {
   }
 
   Stream<List<Product>> getProducts() {
-    return _db.collection('products').orderBy('type').orderBy('description').snapshots().map((snapshot) => snapshot
+    return _db.collection('products').orderBy('description').snapshots().map((snapshot) => snapshot
         .documents
         .map((document) => Product.fromFirestore(document.data)).toList());
   }
