@@ -27,16 +27,27 @@ class Products extends StatelessWidget {
             ? ListView.builder(
                 itemCount: products.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    isThreeLine: true,
-                    title: Text('(${index + 1})\n${products[index].upc}'),
-                    subtitle: Text(
-                        '${products[index].description}\n${products[index].unit} - ${products[index].type}'),
-                    trailing: Text('${products[index].price.toString()}'),
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => EditProduct(products[index])));
-                    },
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                      child: ListTile(
+                        isThreeLine: true,
+                        title: Text('(${index + 1})\n${products[index].upc}'),
+                        subtitle: Text(
+                            '${products[index].description}\n${products[index].unit} - ${products[index].type}'),
+                        trailing: Text('${products[index].price.toString()}'),
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  EditProduct(products[index])));
+                        },
+                      ),
+                    ),
                   );
                 })
             : Center(child: CircularProgressIndicator()));

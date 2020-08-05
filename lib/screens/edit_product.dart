@@ -72,7 +72,7 @@ class _EditProductState extends State<EditProduct> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Editar de Produto'),
+        title: Text('Incluir/Editar Produto'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),

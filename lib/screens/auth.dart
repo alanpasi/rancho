@@ -93,6 +93,23 @@ class _LoginViewState extends State<LoginView> {
                     }
                   },
                 ),
+//                SizedBox(height: 12.0),
+                MaterialButton(
+                  height: 54,
+                  child: Text(
+                    'Registrar',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => RegisterView()));
+                  },
+                ),
                 SizedBox(height: 12.0),
                 Text(
                   error,

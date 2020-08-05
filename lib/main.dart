@@ -26,64 +26,7 @@ class MyApp extends StatelessWidget {
         ),
         title: 'Rancho no Supermercado',
 //        home: ProductView(),
-        home: OpeningView(),
-      ),
-    );
-  }
-}
-
-class OpeningView extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        centerTitle: true,
-        title: Text('Rancho no Supermercado'),
-      ),
-      body: Container(
-        alignment: Alignment.center,
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 60.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              MaterialButton(
-                height: 54,
-                child: Text(
-                  'Entrar',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => LoginView()));
-                },
-              ),
-              SizedBox(height: 24),
-              MaterialButton(
-                height: 54,
-                child: Text(
-                  'Registrar',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => RegisterView()));
-                },
-              )
-            ],
-          ),
-        ),
+        home: LoginView(),
       ),
     );
   }
