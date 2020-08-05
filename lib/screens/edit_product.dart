@@ -20,8 +20,6 @@ class _EditProductState extends State<EditProduct> {
   final typeController = TextEditingController();
   final priceController = TextEditingController();
 
-//  final isincartController = TextEditingController();
-
   @override
   void dispose() {
     upcController.dispose();
@@ -29,7 +27,6 @@ class _EditProductState extends State<EditProduct> {
     unitController.dispose();
     typeController.dispose();
     priceController.dispose();
-//    isincartController.dispose();
     super.dispose();
   }
 
@@ -42,7 +39,6 @@ class _EditProductState extends State<EditProduct> {
       unitController.text = '';
       typeController.text = '';
       priceController.text = '';
-//      isincartController.text = '';
       new Future.delayed(Duration.zero, () {
         final produtctProvider =
             Provider.of<ProductProvider>(context, listen: false);
@@ -56,7 +52,6 @@ class _EditProductState extends State<EditProduct> {
       unitController.text = widget.product.unit;
       typeController.text = widget.product.type;
       priceController.text = widget.product.price.toString();
-//      isincartController.text = widget.product.isincart.toString();
       // State update
       new Future.delayed(Duration.zero, () {
         final produtctProvider =

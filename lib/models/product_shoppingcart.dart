@@ -1,4 +1,4 @@
-class Product {
+class ProductShoppingcart {
   final String productId;
   final String upc;
   final String description;
@@ -7,14 +7,14 @@ class Product {
   final String type;
   final bool isincart;
 
-  Product(
+  ProductShoppingcart(
       {this.productId,
-      this.upc,
-      this.description,
-      this.unit,
-      this.price,
-      this.type,
-      this.isincart});
+        this.upc,
+        this.description,
+        this.unit,
+        this.price,
+        this.type,
+        this.isincart});
 
   Map<String, dynamic> toMap() {
     return {
@@ -28,7 +28,7 @@ class Product {
     };
   }
 
-  Product.fromFirestore(Map<String, dynamic> firestore)
+  ProductShoppingcart.fromFirestore(Map<String, dynamic> firestore)
       : productId = firestore['productId'],
         upc = firestore['upc'],
         description = firestore['description'],

@@ -57,6 +57,9 @@ class Products extends StatelessWidget {
                               builder: (context) =>
                                   EditProduct(products[index])));
                         },
+                        onLongPress: () {
+
+                        },
                       ),
                     ),
                   );
