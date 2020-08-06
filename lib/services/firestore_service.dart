@@ -20,18 +20,31 @@ class FirestoreService {
   }
 
   Stream<List<Product>> getProducts() {
-    return _db.collection('products').orderBy('description').snapshots().map((snapshot) => snapshot
-        .documents
-        .map((document) => Product.fromFirestore(document.data)).toList());
+    return _db.collection('products').orderBy('description').snapshots().map(
+        (snapshot) => snapshot.documents
+            .map((document) => Product.fromFirestore(document.data))
+            .toList());
   }
 
   Stream<List<ProductShoppingcart>> getShoppingcart() {
-    return _db.collection('products').orderBy('description').where('isincart', isEqualTo: true).snapshots().map((snapshot) => snapshot
-        .documents
-        .map((document) => ProductShoppingcart.fromFirestore(document.data)).toList());
+    return _db
+        .collection('products')
+        .orderBy('description')
+        .where('isincart', isEqualTo: true)
+        .snapshots()
+        .map((snapshot) => snapshot.documents
+            .map((document) => ProductShoppingcart.fromFirestore(document.data))
+            .toList());
   }
 
-  Future<void> removeProduct(String producId) {
-    return _db.collection('products').document(producId).delete();
+  Future<void> removeProduct(String productId) {
+    return _db.collection('products').document(productId).delete();
+  }
+
+  Future<void> updateIsInCart(String productId, bool isInCart) {
+    return _db
+        .collection('products')
+        .document(productId)
+        .updateData({'isincart': isInCart});
   }
 }

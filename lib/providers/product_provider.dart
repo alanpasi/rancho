@@ -10,6 +10,7 @@ class ProductProvider with ChangeNotifier {
   String _description;
   String _unit;
   double _price;
+  double _quantity;
   String _type;
   bool _isincart;
   String _productId;
@@ -23,6 +24,8 @@ class ProductProvider with ChangeNotifier {
   String get unit => _unit;
 
   double get price => _price;
+
+  double get quantity => _quantity;
 
   String get type => _type;
 
@@ -49,6 +52,11 @@ class ProductProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  changeQuantity(String value) {
+    _quantity = double.parse(value);
+    notifyListeners();
+  }
+
   changeType(String value) {
     _type = value;
     notifyListeners();
@@ -65,6 +73,7 @@ class ProductProvider with ChangeNotifier {
     _unit = product.unit;
     _type = product.type;
     _price = product.price;
+//    _quantity = product.quantity;
     _productId = product.productId;
   }
 
@@ -77,6 +86,7 @@ class ProductProvider with ChangeNotifier {
           description: description,
           unit: unit,
           price: price,
+          quantity: quantity,
           type: type,
           isincart: isincart,
           productId: uuid.v4());
@@ -88,6 +98,7 @@ class ProductProvider with ChangeNotifier {
           description: description,
           unit: unit,
           price: price,
+          quantity: quantity,
           type: type,
           isincart: isincart,
           productId: _productId);
@@ -97,5 +108,9 @@ class ProductProvider with ChangeNotifier {
 
   removeProduct(String productId) {
     firestoreService.removeProduct(productId);
+  }
+
+  updateIsInCart(String productId, bool isInCart) {
+    firestoreService.updateIsInCart(productId, isInCart);
   }
 }

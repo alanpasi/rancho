@@ -4,17 +4,19 @@ class ProductShoppingcart {
   final String description;
   final String unit;
   final double price;
+  final double quantity;
   final String type;
   final bool isincart;
 
   ProductShoppingcart(
       {this.productId,
-        this.upc,
-        this.description,
-        this.unit,
-        this.price,
-        this.type,
-        this.isincart});
+      this.upc,
+      this.description,
+      this.unit,
+      this.price,
+      this.quantity,
+      this.type,
+      this.isincart});
 
   Map<String, dynamic> toMap() {
     return {
@@ -23,6 +25,7 @@ class ProductShoppingcart {
       'description': description,
       'unit': unit,
       'price': price,
+      'quantity': quantity,
       'type': type,
       'isincart': isincart
     };
@@ -34,6 +37,7 @@ class ProductShoppingcart {
         description = firestore['description'],
         unit = firestore['unit'],
         price = firestore['price'],
+        quantity = firestore['quantity'],
         type = firestore['type'],
         isincart = firestore['isincart'];
 }

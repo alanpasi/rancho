@@ -19,6 +19,8 @@ class _EditProductState extends State<EditProduct> {
   final unitController = TextEditingController();
   final typeController = TextEditingController();
   final priceController = TextEditingController();
+  final quantityController = TextEditingController();
+  final isincartController = TextEditingController();
 
   @override
   void dispose() {
@@ -27,6 +29,8 @@ class _EditProductState extends State<EditProduct> {
     unitController.dispose();
     typeController.dispose();
     priceController.dispose();
+    quantityController.dispose();
+    isincartController.dispose();
     super.dispose();
   }
 
@@ -39,10 +43,12 @@ class _EditProductState extends State<EditProduct> {
       unitController.text = '';
       typeController.text = '';
       priceController.text = '';
+      quantityController.text = '';
+      isincartController.text = '';
       new Future.delayed(Duration.zero, () {
-        final produtctProvider =
+        final productProvider =
             Provider.of<ProductProvider>(context, listen: false);
-        produtctProvider.loadValues(Product());
+        productProvider.loadValues(Product());
       });
     } else {
       // Existing record
@@ -52,11 +58,13 @@ class _EditProductState extends State<EditProduct> {
       unitController.text = widget.product.unit;
       typeController.text = widget.product.type;
       priceController.text = widget.product.price.toString();
+      quantityController.text = widget.product.quantity.toString();
+      isincartController.text = widget.product.isincart.toString();
       // State update
       new Future.delayed(Duration.zero, () {
-        final produtctProvider =
+        final productProvider =
             Provider.of<ProductProvider>(context, listen: false);
-        produtctProvider.loadValues(widget.product);
+        productProvider.loadValues(widget.product);
       });
     }
     super.initState();
@@ -64,7 +72,7 @@ class _EditProductState extends State<EditProduct> {
 
   @override
   Widget build(BuildContext context) {
-    final produtctProvider = Provider.of<ProductProvider>(context);
+    final productProvider = Provider.of<ProductProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -78,35 +86,42 @@ class _EditProductState extends State<EditProduct> {
               controller: upcController,
               decoration: InputDecoration(hintText: 'Código'),
               onChanged: (value) {
-                produtctProvider.changeUpc(value);
+                productProvider.changeUpc(value);
               },
             ),
             TextField(
               controller: descriptionController,
               decoration: InputDecoration(hintText: 'Descrição'),
               onChanged: (value) {
-                produtctProvider.changeDescription(value);
+                productProvider.changeDescription(value);
               },
             ),
             TextField(
               controller: unitController,
               decoration: InputDecoration(hintText: 'Unidade'),
               onChanged: (value) {
-                produtctProvider.changeUnit(value);
+                productProvider.changeUnit(value);
               },
             ),
             TextField(
               controller: typeController,
               decoration: InputDecoration(hintText: 'Categoria'),
               onChanged: (value) {
-                produtctProvider.changeType(value);
+                productProvider.changeType(value);
               },
             ),
             TextField(
               controller: priceController,
               decoration: InputDecoration(hintText: 'Valor'),
               onChanged: (value) {
-                produtctProvider.changePrice(value);
+                productProvider.changePrice(value);
+              },
+            ),
+            TextField(
+              controller: quantityController,
+              decoration: InputDecoration(hintText: 'Quantidade'),
+              onChanged: (value) {
+                productProvider.changeQuantity(value);
               },
             ),
             SizedBox(
@@ -115,8 +130,8 @@ class _EditProductState extends State<EditProduct> {
             RaisedButton(
                 child: Text('Salvar'),
                 onPressed: () {
-                  produtctProvider.changeIsInCart(false);
-                  produtctProvider.saveProduct();
+                  productProvider.changeIsInCart(true);
+                  productProvider.saveProduct();
                   Navigator.of(context).pop();
                 }),
             (widget.product != null)
@@ -124,7 +139,7 @@ class _EditProductState extends State<EditProduct> {
                 color: Colors.red,
                 child: Text('Apagar'),
                 onPressed: () {
-                  produtctProvider.removeProduct(widget.product.productId);
+                  productProvider.removeProduct(widget.product.productId);
                   Navigator.of(context).pop();
                 }): MaterialButton(
               height: 54.0,
@@ -142,7 +157,7 @@ class _EditProductState extends State<EditProduct> {
                 FlutterBarcodeScanner.scanBarcode(
                     '#000000', 'Cancelar', true, ScanMode.BARCODE)
                     .then((value) => setState(() {
-                  produtctProvider.changeUpc(value);
+                  productProvider.changeUpc(value);
                   upcController.text = value;
                 }));
               },

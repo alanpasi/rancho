@@ -4,6 +4,7 @@ class Product {
   final String description;
   final String unit;
   final double price;
+  final double quantity;
   final String type;
   final bool isincart;
 
@@ -13,6 +14,7 @@ class Product {
       this.description,
       this.unit,
       this.price,
+      this.quantity,
       this.type,
       this.isincart});
 
@@ -23,6 +25,7 @@ class Product {
       'description': description,
       'unit': unit,
       'price': price,
+      'quantity': quantity,
       'type': type,
       'isincart': isincart
     };
@@ -34,6 +37,7 @@ class Product {
         description = firestore['description'],
         unit = firestore['unit'],
         price = firestore['price'],
+        quantity = firestore['quantity'],
         type = firestore['type'],
         isincart = firestore['isincart'];
 }
