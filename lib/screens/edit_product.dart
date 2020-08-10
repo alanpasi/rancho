@@ -83,6 +83,7 @@ class _EditProductState extends State<EditProduct> {
         child: ListView(
           children: <Widget>[
             TextField(
+              keyboardType: TextInputType.number,
               controller: upcController,
               decoration: InputDecoration(hintText: 'Código'),
               onChanged: (value) {
@@ -90,6 +91,7 @@ class _EditProductState extends State<EditProduct> {
               },
             ),
             TextField(
+              textCapitalization: TextCapitalization.characters,
               controller: descriptionController,
               decoration: InputDecoration(hintText: 'Descrição'),
               onChanged: (value) {
@@ -97,6 +99,7 @@ class _EditProductState extends State<EditProduct> {
               },
             ),
             TextField(
+              textCapitalization: TextCapitalization.characters,
               controller: unitController,
               decoration: InputDecoration(hintText: 'Unidade'),
               onChanged: (value) {
@@ -104,6 +107,7 @@ class _EditProductState extends State<EditProduct> {
               },
             ),
             TextField(
+              textCapitalization: TextCapitalization.characters,
               controller: typeController,
               decoration: InputDecoration(hintText: 'Categoria'),
               onChanged: (value) {
@@ -111,6 +115,7 @@ class _EditProductState extends State<EditProduct> {
               },
             ),
             TextField(
+              keyboardType: TextInputType.number,
               controller: priceController,
               decoration: InputDecoration(hintText: 'Valor'),
               onChanged: (value) {
@@ -118,6 +123,7 @@ class _EditProductState extends State<EditProduct> {
               },
             ),
             TextField(
+              keyboardType: TextInputType.number,
               controller: quantityController,
               decoration: InputDecoration(hintText: 'Quantidade'),
               onChanged: (value) {

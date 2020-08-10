@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:rancho/models/product.dart';
 import 'package:rancho/providers/product_provider.dart';
@@ -6,9 +7,24 @@ import 'package:rancho/screens/edit_product.dart';
 import 'package:rancho/screens/shoppingcart.dart';
 
 class Products extends StatelessWidget {
+  final f = NumberFormat('##0.00', 'pt_BR');
+
+  void addInCart(context, String productId) {
+    final productProvider =
+        Provider.of<ProductProvider>(context, listen: false);
+    print('$productId');
+    productProvider.updateIsInCart(productId, true);
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content: Text(
+        'Produto incluído no Carrinho',
+        style: TextStyle(color: Colors.white),
+      ),
+      backgroundColor: Color(0xff560027),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
-    print('================Products/build==================');
     final products = Provider.of<List<Product>>(context);
 
     return Scaffold(
@@ -51,18 +67,19 @@ class Products extends StatelessWidget {
                       ),
                       child: ListTile(
                         isThreeLine: true,
-                        title: Text('${index + 1}/${products.length}\n${products[index].upc}'),
+                        title: Text(
+                            '${index + 1}/${products.length}\n${products[index].upc}'),
                         subtitle: Text(
                             '${products[index].description}\n${products[index].unit} - ${products[index].type}'),
                         trailing:
-                            Text('R\$ ${products[index].price.toString()}'),
+                            Text('R\$ ${f.format(products[index].price)}'),
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>
                                   EditProduct(products[index])));
                         },
                         onLongPress: () {
-                          AddInCart(context, products[index].productId);
+                          addInCart(context, products[index].productId);
                         },
                       ),
                     ),
@@ -70,17 +87,4 @@ class Products extends StatelessWidget {
                 })
             : Center(child: CircularProgressIndicator()));
   }
-}
-
-void AddInCart(context, String productId) {
-  final productProvider = Provider.of<ProductProvider>(context, listen: false);
-  print('$productId');
-  productProvider.updateIsInCart(productId, true);
-  Scaffold.of(context).showSnackBar(SnackBar(
-    content: Text(
-      'Produto incluído no Carrinho',
-      style: TextStyle(color: Colors.white),
-    ),
-    backgroundColor: Color(0xff560027),
-  ));
 }

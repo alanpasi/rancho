@@ -37,7 +37,6 @@ class ShoppingcartProvider with ChangeNotifier {
   }
 
   loadValues(ProductShoppingcart productShoppingcart) {
-    print('=================loadValues: ${productShoppingcart.quantity}');
     _upc = productShoppingcart.upc;
     _description = productShoppingcart.description;
     _unit = productShoppingcart.unit;
@@ -47,18 +46,18 @@ class ShoppingcartProvider with ChangeNotifier {
     _productId = productShoppingcart.productId;
   }
 
-  saveProductShoppingcart() {
-    print('$_productId, $upc, $description, $unit, $price, $type, $isincart');
-    // Update product
-    var updateProduct = ProductShoppingcart(
-        upc: upc,
-        description: description,
-        unit: unit,
-        price: price,
-        quantity: quantity,
-        type: type,
-        isincart: isincart,
-        productId: _productId);
-    firestoreService.saveProductShoppincart(updateProduct);
-  }
+//  saveProductShoppingcart() {
+//    print('$_productId, $upc, $description, $unit, $price, $type, $isincart');
+//    // Update product
+//    var updateProduct = ProductShoppingcart(
+//        upc: upc,
+//        description: description,
+//        unit: unit,
+//        price: price,
+//        quantity: quantity,
+//        type: type,
+//        isincart: isincart,
+//        productId: _productId);
+//    firestoreService.saveProductShoppincart(updateProduct);
+//  }
 }

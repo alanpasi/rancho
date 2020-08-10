@@ -1,25 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:rancho/models/product_shoppingcart.dart';
 import 'package:rancho/providers/product_provider.dart';
 
 class Shoppingcart extends StatelessWidget {
+  final f = NumberFormat('##0.00', 'pt_BR');
+
+  void removeInCart(context, String productId) {
+    final productProvider =
+        Provider.of<ProductProvider>(context, listen: false);
+    print('$productId');
+    productProvider.updateIsInCart(productId, false);
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content: Text(
+        'Produto excluído no Carrinho',
+        style: TextStyle(color: Colors.white),
+      ),
+      backgroundColor: Color(0xff560027),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
-    print('================Shoppingcart/build==================');
 
     final shoppingcart = Provider.of<List<ProductShoppingcart>>(context);
 
     var _totalPrice = 0.0;
 
-//    print(shoppingcart.length);
-//    print(shoppingcart[0].price);
-//    print(shoppingcart[1].price);
     for (int i = 0; i < shoppingcart.length; i++) {
-      _totalPrice = _totalPrice + (shoppingcart[i].price.toDouble() * shoppingcart[i].quantity);
-      print(shoppingcart[i].quantity);
+      _totalPrice =
+          _totalPrice + (shoppingcart[i].price * shoppingcart[i].quantity);
+      print('$i ===> ${shoppingcart[i].quantity}');
     }
-    print('Total: $_totalPrice');
+    print('Total: ${f.format(_totalPrice)}');
 
     return Scaffold(
         appBar: AppBar(
@@ -28,7 +42,7 @@ class Shoppingcart extends StatelessWidget {
         bottomNavigationBar: Container(
           alignment: Alignment.center,
           height: 30.0,
-          child: Text('Total: R\$ $_totalPrice'),
+          child: Text('Total: R\$ ${f.format(_totalPrice)}'),
         ),
         body: (shoppingcart != null)
             ? ListView.builder(
@@ -47,10 +61,11 @@ class Shoppingcart extends StatelessWidget {
                             '${index + 1}/${shoppingcart.length}\n${shoppingcart[index].upc}'),
                         subtitle: Text(
                             '${shoppingcart[index].description}\n${shoppingcart[index].unit} - ${shoppingcart[index].type}'),
-                        trailing:
-                            Text('R\$ ${shoppingcart[index].price.toString()}\nQuantidade: ${shoppingcart[index].quantity.toString()}'),
+                        trailing: Text(
+                            'R\$ ${f.format(shoppingcart[index].price)}\nQuantidade: ${f.format(shoppingcart[index].quantity)}\nSub-total: R\$ ${f.format(shoppingcart[index].price * shoppingcart[index].quantity)}'),
+                        onTap: () {},
                         onLongPress: () {
-                          RemoveInCart(context, shoppingcart[index].productId);
+                          removeInCart(context, shoppingcart[index].productId);
                         },
                       ),
                     ),
@@ -58,17 +73,4 @@ class Shoppingcart extends StatelessWidget {
                 })
             : Center(child: CircularProgressIndicator()));
   }
-}
-
-void RemoveInCart(context, String productId) {
-  final productProvider = Provider.of<ProductProvider>(context, listen: false);
-  print('$productId');
-  productProvider.updateIsInCart(productId, false);
-  Scaffold.of(context).showSnackBar(SnackBar(
-    content: Text(
-      'Produto excluído no Carrinho',
-      style: TextStyle(color: Colors.white),
-    ),
-    backgroundColor: Color(0xff560027),
-  ));
 }

@@ -73,7 +73,7 @@ class ProductProvider with ChangeNotifier {
     _unit = product.unit;
     _type = product.type;
     _price = product.price;
-//    _quantity = product.quantity;
+    _quantity = product.quantity;
     _productId = product.productId;
   }
 
