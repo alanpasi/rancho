@@ -10,11 +10,26 @@ void main() {
   runApp(MyAppInit());
 }
 
-class MyAppInit extends StatelessWidget {
+class MyAppInit extends StatefulWidget {
+  final Widget child;
+
+  const MyAppInit({Key key, @required this.child}) : super(key: key);
+
+  @override
+  _MyAppInitState createState() => _MyAppInitState();
+}
+
+class _MyAppInitState extends State<MyAppInit> {
+  Future<FirebaseApp> _initialization;
+  @override
+  void initState() {
+    _initialization = Firebase.initializeApp();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: Firebase.initializeApp(),
+        future: _initialization,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return CircularProgressIndicator();
@@ -52,7 +67,6 @@ class _MyAppState extends State<MyApp> {
           brightness: Brightness.dark,
         ),
         title: 'Rancho no Supermercado',
-//        home: ProductView(),
         home: LoginView(),
       ),
     );
