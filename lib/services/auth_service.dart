@@ -1,21 +1,23 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:rancho/models/user.dart';
+// https://youtu.be/mZYuuGAIwe4
+// https://youtu.be/LBJoY4VjECo
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rancho/models/user_model.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // create user obj based on FirebaseUser
-  User _userFromFirebaseUser(FirebaseUser user) {
-    return user != null ? User(uid: user.uid) : null;
+  UserModel _userFromFirebaseUser(User user) {
+    return user != null ? UserModel(uid: user.uid) : null;
   }
 
   // sign in with email & password
   Future signInWithEmailAndPassword(String email, String password) async {
     try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(
+      UserCredential result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      FirebaseUser user = result.user;
+      var user = result.user;
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
@@ -26,9 +28,9 @@ class AuthService {
   // register with email & password
   Future registerWithEmailAndPassword(String email, String password) async {
     try {
-      AuthResult result = await _auth.createUserWithEmailAndPassword(
+      UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      FirebaseUser user = result.user;
+      var user = result.user;
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());

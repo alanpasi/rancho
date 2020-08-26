@@ -3,8 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:rancho/models/product.dart';
 import 'package:rancho/providers/product_provider.dart';
+import 'package:rancho/screens/carts.dart';
 import 'package:rancho/screens/edit_product.dart';
-import 'package:rancho/screens/shoppingcart.dart';
 
 class Products extends StatelessWidget {
   final f = NumberFormat('##0.00', 'pt_BR');
@@ -48,8 +48,8 @@ class Products extends StatelessWidget {
             FloatingActionButton(
                 child: Icon(Icons.shopping_cart),
                 onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => Shoppingcart()));
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => Carts()));
                 }),
           ],
         ),

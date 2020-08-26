@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rancho/screens/products.dart';
-import 'package:rancho/services/auth.dart';
+import 'package:rancho/services/auth_service.dart';
 import 'package:rancho/shared/constants.dart';
 
 class LoginView extends StatefulWidget {

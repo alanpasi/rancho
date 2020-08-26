@@ -1,50 +1,43 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:rancho/models/cart.dart';
 import 'package:rancho/models/product.dart';
-import 'package:rancho/models/product_shoppingcart.dart';
 
 class FirestoreService {
-  Firestore _db = Firestore.instance;
+  FirebaseFirestore _db = FirebaseFirestore.instance;
 
   Future<void> saveProduct(Product product) {
     return _db
         .collection('products')
-        .document(product.productId)
-        .setData(product.toMap());
+        .doc(product.productId)
+        .set(product.toMap());
   }
 
-  Future<void> saveProductShoppincart(ProductShoppingcart productShoppingcart) {
-    return _db
-        .collection('products')
-        .document(productShoppingcart.productId)
-        .setData(productShoppingcart.toMap());
+  Future<void> saveCart(Cart cart) {
+    return _db.collection('carts').doc(cart.cartId).set(cart.toMap());
   }
 
   Stream<List<Product>> getProducts() {
     return _db.collection('products').orderBy('description').snapshots().map(
-        (snapshot) => snapshot.documents
-            .map((document) => Product.fromFirestore(document.data))
+        (snapshot) => snapshot.docs
+            .map((doc) => Product.fromFirestore(doc.data()))
             .toList());
   }
 
-  Stream<List<ProductShoppingcart>> getShoppingcart() {
-    return _db
-        .collection('products')
-        .orderBy('description')
-        .where('isincart', isEqualTo: true)
-        .snapshots()
-        .map((snapshot) => snapshot.documents
-            .map((document) => ProductShoppingcart.fromFirestore(document.data))
+  Stream<List<Cart>> getCarts() {
+    return _db.collection('carts').orderBy('date').snapshots().map((snapshot) =>
+        snapshot.docs
+            .map((doc) => Cart.fromFirestore(doc.data()))
             .toList());
   }
 
   Future<void> removeProduct(String productId) {
-    return _db.collection('products').document(productId).delete();
+    return _db.collection('products').doc(productId).delete();
   }
 
   Future<void> updateIsInCart(String productId, bool isInCart) {
     return _db
         .collection('products')
-        .document(productId)
-        .updateData({'isincart': isInCart});
+        .doc(productId)
+        .update({'isincart': isInCart});
   }
 }
